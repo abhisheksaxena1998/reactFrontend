@@ -1,8 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import NavBar from "./components/navbar"
+import NavS from "./components/navbars"
+
 import { MDBDataTable } from 'mdbreact';
 
 import React from 'react';
@@ -30,19 +32,19 @@ class myComponent extends React.Component {
           label: 'Unique Id',
           field: 'unique_id',
          
-          width: 150
+          width: 80
         },
         {
           label: 'Index',
           field: 'index',
           
-          width: 270
+          width: 70
         },
         {
           label: 'Name',
           field: 'name',
          
-          width: 200
+          width: 100
         },
         {
           label: 'Result',
@@ -54,7 +56,7 @@ class myComponent extends React.Component {
           label: 'Time',
           field: 'time',
          
-          width: 270
+          width: 200
         },
         {
           label: 'Phone Number',
@@ -71,19 +73,22 @@ class myComponent extends React.Component {
       }
     const { records, isLoading } = this.state;
     if (isLoading) {
-      return <p>Loading ...</p>;
+      //return <p>Loading ...</p>;
+      return (
+        <div>
+          <NavS />
+        <header className="App-header">
+        <p>
+          <code>Loading requested data ...</code>
+        </p>
+        </header>
+        </div>
+      );
     }
     return (
       <div>
-      <ul>
-        {records.map(hit =>
-          <li key={hit.unique_id}>
-            <h4>{hit.unique_id},{" "}{hit.name},{" "}{hit.result}</h4>
-            
-          </li>
-        )}
-      </ul>
-      <MDBDataTable
+         <NavBar totalTasks={this.state.records.length}/>
+      <MDBDataTable className="tablee"
       striped
       bordered
       small
