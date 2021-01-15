@@ -9,17 +9,22 @@ import React from 'react';
 class myComponent extends React.Component {
   state = {
     records: [],
+    isLoading: false,
   };
   componentDidMount() {
+    this.setState({ isLoading: true });
     const apiUrl = 'https://zomsystem.herokuapp.com/showallrecords';
     fetch(apiUrl)
       .then((response) => response.json())
       .then(data => {
-        this.setState({ records: data })});
+        this.setState({ records: data , isLoading: false})});
   }
   render() 
   {
-    const { records } = this.state;
+    const { records, isLoading } = this.state;
+    if (isLoading) {
+      return <p>Loading ...</p>;
+    }
     return (
       <ul>
         {records.map(hit =>
