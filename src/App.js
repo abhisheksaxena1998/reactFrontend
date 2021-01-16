@@ -4,13 +4,21 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import NavBar from "./components/navbar"
 import NavS from "./components/navbars"
-
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import { MDBDataTable } from 'mdbreact';
-
 import React from 'react';
+import Timekeeper from 'react-timekeeper';
+import Timepickercomponent from "./components/timepickercomponent"
 
 class myComponent extends React.Component {
   state = {
+    currentItem:{
+      unique_id:'',
+      index:'',
+      name:'',
+      time:'',
+      phonenumber:'',
+    },
     records: [],
     isLoading: false,
   };
@@ -24,8 +32,18 @@ class myComponent extends React.Component {
         console.log(this.state)
       });
   }
+  handleReset = ()=>{
+    console.log("reset clicked")
+    console.log(this.state)
+  }
+  handleSubmit=()=>{
+    console.log("submit clicked")
+    console.log(this.state)
+    console.log("Info is ",this.state.currentItem)
+  }
   render() 
   {
+    
     const data = {
       columns: [
         {
@@ -85,9 +103,66 @@ class myComponent extends React.Component {
         </div>
       );
     }
+    
     return (
       <div>
          <NavBar totalTasks={this.state.records.length}/>
+
+         <MDBContainer>
+  <MDBRow>
+    <MDBCol md="6" className="new-card">
+      <form>
+        <p className="h5 text-center mb-4">Book Ticket</p>
+        <div className="grey-text">
+          <MDBInput label="Name" icon="address-book" group type="text" validate error="wrong"
+            success="right" value= {this.state.currentItem.name}
+            placeholder="Enter Name"
+            onChange={(e) => {
+              this.setState({
+                currentItem:{               
+                  unique_id:this.state.currentItem.unique_id, 
+                  name: e.target.value,
+                  phonenumber: this.state.currentItem.phonenumber,
+                  time:this.state.currentItem.time,   
+                     
+                }
+              });
+              console.log(this.state);}} />
+          <MDBInput label="Phone number " icon="phone" group type="phone" value= {this.state.currentItem.phonenumber}
+          placeholder="Enter phone"
+          onChange={(f) => {
+            this.setState({
+              currentItem:{ 
+                name:this.state.currentItem.name ,               
+                unique_id:this.state.currentItem.unique_id,
+                phonenumber:f.target.value,
+                time:this.state.currentItem.time,   
+              }
+            });
+            console.log(this.state);
+          }}/>
+          <MDBInput label="Seat no." icon="envelope" group type="text" validate error="wrong"
+            success="right" value= {this.state.currentItem.unique_id}
+            placeholder="Enter unique id "
+            onChange={(e) => {
+              this.setState({
+                currentItem:{               
+                 unique_id:e.target.value,
+                  name:this.state.currentItem.name ,
+                  phonenumber: this.state.currentItem.phonenumber,
+                  time:this.state.currentItem.time,   
+                }
+              });
+              console.log(this.state);}} />
+           
+        </div>
+        <div className="text-center">
+          <MDBBtn  onClick={this.handleSubmit}>Submit</MDBBtn>
+        </div>
+      </form>
+    </MDBCol>
+  </MDBRow>
+</MDBContainer>      
       <MDBDataTable className="tablee"
       striped
       bordered
