@@ -10,8 +10,6 @@ import React from 'react';
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import swal from "sweetalert";
-import Timekeeper from 'react-timekeeper';
-import Timepickercomponent from "./components/timepickercomponent"
 
 class myComponent extends React.Component {
   state = {
