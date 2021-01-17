@@ -57,7 +57,7 @@ class myComponent extends React.Component {
      time:this.state.currentItem.time ,   
          
     }})
-    var formattedTime= new Date(this.state.currentItem.time).toLocaleString().replace(/,/g,"")//.slice(0,-2)
+    var formattedTime= new Date(this.state.currentItem.time).getTime()
     console.log(formattedTime)
     var url="https://zomsystem.herokuapp.com/addRecord?uniqueid="+this.state.currentItem.unique_id +"&nm="+this.state.currentItem.name +"&phonenumber="+this.state.currentItem.phonenumber +"&time="+formattedTime ;
     console.log(url)
