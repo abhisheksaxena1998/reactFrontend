@@ -18,7 +18,7 @@ const NavBar = (props) => {
             {"  "}
             Movie Ticketing System{" "}
           </strong>
-          <span className="badge badge-pill badge-secondary">{"Loading"}</span>
+          <div className="spinner-grow text-secondary" role="status"></div>
         </div>
       </div>
     </nav>
