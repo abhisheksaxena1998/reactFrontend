@@ -11,6 +11,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import swal from "sweetalert";
 
+
 class myComponent extends React.Component {
   state = {
     currentItem:{
@@ -136,6 +137,9 @@ class myComponent extends React.Component {
         <div>
           <NavS />
         <header className="App-header">
+        <div className="spinner-grow text-info" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
         <code>Fetching data from backend ...</code>
         <div className="spinner-border text-info" role="status">
         <span className="sr-only">Loading...</span>
@@ -218,13 +222,14 @@ class myComponent extends React.Component {
       </form>
     </MDBCol>
   </MDBRow>
-</MDBContainer>      
-      <MDBDataTable className="tablee"
+  <MDBDataTable className="tablee"
       striped
       bordered
       small
       data={data}
     />
+</MDBContainer>      
+     
     </div>
     );
   }
