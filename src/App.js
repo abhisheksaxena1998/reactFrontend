@@ -262,6 +262,26 @@ class myComponent extends React.Component {
           <MDBBtn color="danger"  onClick={this.handleDelete}>Delete</MDBBtn>
         </div>
       </form>
+      <MDBRow>
+        <MDBCol>
+      <form>
+        <p className="h5 text-center mb-4">Delete Ticket</p>
+        <div className="grey-text">
+          <MDBInput label="Unique Id" icon="id-card-alt" group type="text" validate error="wrong" required
+            success="right" value= {this.state.tempId}
+            placeholder="Enter Unique Id "
+            onChange={(e) => {
+              this.setState({tempId:e.target.value   
+                })
+               
+              console.log(this.state);}} />
+         </div>
+        <div className="text-center">
+          <MDBBtn color="danger"  onClick={this.handleDelete}>Delete</MDBBtn>
+        </div>
+      </form>
+      </MDBCol>
+      </MDBRow>
     </MDBCol>
   
     </MDBRow>
