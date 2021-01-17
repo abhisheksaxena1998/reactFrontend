@@ -7,6 +7,8 @@ import NavS from "./components/navbars"
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import { MDBDataTable } from 'mdbreact';
 import React from 'react';
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
 import Timekeeper from 'react-timekeeper';
 import Timepickercomponent from "./components/timepickercomponent"
 
@@ -20,6 +22,7 @@ class myComponent extends React.Component {
       phonenumber:'',
     },
     records: [],
+    startDate:'',
     isLoading: false,
   };
   componentDidMount() {
@@ -32,6 +35,14 @@ class myComponent extends React.Component {
         console.log(this.state)
       });
   }
+  handleChange = (date) => {
+    this.setState({currentItem:{               
+      unique_id:this.state.currentItem.unique_id, 
+      name: this.state.currentItem.name,
+      phonenumber: this.state.currentItem.phonenumber,
+     time:date,   
+         
+    }})};
   handleReset = ()=>{
     console.log("reset clicked")
     console.log(this.state)
@@ -39,7 +50,21 @@ class myComponent extends React.Component {
   handleSubmit=()=>{
     console.log("submit clicked")
     console.log(this.state)
-    console.log("Info is ",this.state.currentItem)
+    console.log("Info is ",this.state.startDate)
+    this.setState({currentItem:{               
+      unique_id:this.state.currentItem.unique_id, 
+      name: this.state.currentItem.name,
+      phonenumber: this.state.currentItem.phonenumber,
+     time:this.state.currentItem.time ,   
+         
+    }})
+    var formattedTime= new Date(this.state.currentItem.time).toLocaleString().replace(/,/g,"").slice(0,-2)
+    console.log(formattedTime)
+    var url="https://zomsystem.herokuapp.com/addRecord?uniqueid="+this.state.currentItem.unique_id +"&nm="+this.state.currentItem.name +"&phonenumber="+this.state.currentItem.phonenumber +"&time="+formattedTime ;
+    console.log(url)
+    fetch(url)
+    this.componentDidMount()
+    
   }
   render() 
   {
@@ -123,10 +148,10 @@ class myComponent extends React.Component {
                   unique_id:this.state.currentItem.unique_id, 
                   name: e.target.value,
                   phonenumber: this.state.currentItem.phonenumber,
-                  time:this.state.currentItem.time,   
-                     
-                }
-              });
+                  time:this.state.currentItem.time ,   
+         
+                }})
+               
               console.log(this.state);}} />
           <MDBInput label="Phone number " icon="phone" group type="phone" value= {this.state.currentItem.phonenumber}
           placeholder="Enter phone"
@@ -136,9 +161,10 @@ class myComponent extends React.Component {
                 name:this.state.currentItem.name ,               
                 unique_id:this.state.currentItem.unique_id,
                 phonenumber:f.target.value,
-                time:this.state.currentItem.time,   
-              }
-            });
+                time:this.state.currentItem.time ,   
+         
+              }})
+             
             console.log(this.state);
           }}/>
           <MDBInput label="Seat no." icon="envelope" group type="text" validate error="wrong"
@@ -150,11 +176,22 @@ class myComponent extends React.Component {
                  unique_id:e.target.value,
                   name:this.state.currentItem.name ,
                   phonenumber: this.state.currentItem.phonenumber,
-                  time:this.state.currentItem.time,   
-                }
-              });
+                  time:this.state.currentItem.time ,    
+         
+                }})
+               
               console.log(this.state);}} />
-           
+           <Datetime value={this.state.currentItem.time}
+          onChange={this.handleChange}
+          timeFormat={true}
+          closeOnSelect={true}
+          inputProps={{ placeholder: "Input Date" }}/>
+          Select date:{" "}
+        {this.state.currentItem.time
+          ? this.state.currentItem.time.toString()
+          : "No selected date"}
+          {console.log('tien is',this.state.currentItem.time)}
+        
         </div>
         <div className="text-center">
           <MDBBtn  onClick={this.handleSubmit}>Submit</MDBBtn>
