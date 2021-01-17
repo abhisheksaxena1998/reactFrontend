@@ -10,6 +10,7 @@ import React from 'react';
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import swal from "sweetalert";
+import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdbreact';
 
 
 class myComponent extends React.Component {
@@ -21,6 +22,7 @@ class myComponent extends React.Component {
       time:'',
       phonenumber:'',
     },
+    tempId:'',
     records: [],
     startDate:'',
     isLoading: false,
@@ -46,6 +48,28 @@ class myComponent extends React.Component {
   handleReset = ()=>{
     console.log("reset clicked")
     console.log(this.state)
+  }
+  handleDelete=()=>{
+    console.log("delete clicked",this.state.tempId)
+    if (this.state.tempId!=='')
+    {
+      var url="https://zomsystem.herokuapp.com/deleteticket?query="+this.state.tempId;
+      swal(
+        'Deleted !',
+        'Deleted Successfully !',
+        'error'
+                 )
+      fetch(url)
+      this.componentDidMount()
+    }
+    else{
+      swal(
+        'Enter unique id !',
+        'Enter unique id !',
+        'warning'
+                 )
+    }
+
   }
   handleSubmit=()=>{
     console.log("submit clicked")
@@ -76,7 +100,7 @@ class myComponent extends React.Component {
       swal(
         'Invalid !',
         'Please input all entries  !',
-        'error'
+        'warning'
                  )
     }
     
@@ -221,13 +245,33 @@ class myComponent extends React.Component {
         </div>
       </form>
     </MDBCol>
+    <MDBCol md="6" className="new-card">
+      <form>
+        <p className="h5 text-center mb-4">Delete Ticket</p>
+        <div className="grey-text">
+          <MDBInput label="Unique Id" icon="id-card-alt" group type="text" validate error="wrong" required
+            success="right" value= {this.state.tempId}
+            placeholder="Enter Unique Id "
+            onChange={(e) => {
+              this.setState({tempId:e.target.value   
+                })
+               
+              console.log(this.state);}} />
+         </div>
+        <div className="text-center">
+          <MDBBtn color="danger"  onClick={this.handleDelete}>Delete</MDBBtn>
+        </div>
+      </form>
+    </MDBCol>
   </MDBRow>
+ 
   <MDBDataTable className="tablee"
       striped
       bordered
       small
       data={data}
     />
+
 </MDBContainer>      
      
     </div>
