@@ -136,9 +136,11 @@ class myComponent extends React.Component {
         <div>
           <NavS />
         <header className="App-header">
-        <p>
-          <code>Loading requested data ...</code>
-        </p>
+        <code>Fetching data from backend ...</code>
+        <div className="spinner-border text-info" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+         
         </header>
         </div>
       );
