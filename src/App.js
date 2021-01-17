@@ -263,14 +263,17 @@ class myComponent extends React.Component {
         </div>
       </form>
     </MDBCol>
-  </MDBRow>
- 
+  
+    </MDBRow>
+    <MDBRow>
+      <MDBCol>
   <MDBDataTable className="tablee"
       striped
       bordered
       small
       data={data}
-    />
+    /></MDBCol>
+    </MDBRow>
 
 </MDBContainer>      
      
