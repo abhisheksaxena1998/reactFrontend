@@ -62,8 +62,12 @@ class myComponent extends React.Component {
     console.log(formattedTime)
     var url="https://zomsystem.herokuapp.com/addRecord?uniqueid="+this.state.currentItem.unique_id +"&nm="+this.state.currentItem.name +"&phonenumber="+this.state.currentItem.phonenumber +"&time="+formattedTime ;
     console.log(url)
-    fetch(url)
-    this.componentDidMount()
+    if ((this.state.currentItem.unique_id!='') && (this.state.currentItem.name!='') && (this.state.currentItem.phonenumber!='') && (this.state.currentItem.time!='' ))
+    {
+      fetch(url)
+      this.componentDidMount()
+    }
+    
     
   }
   render() 
@@ -139,7 +143,7 @@ class myComponent extends React.Component {
       <form>
         <p className="h5 text-center mb-4">Book Ticket</p>
         <div className="grey-text">
-          <MDBInput label="Name" icon="address-book" group type="text" validate error="wrong"
+          <MDBInput label="Name" icon="address-book" group type="text" validate error="wrong" required
             success="right" value= {this.state.currentItem.name}
             placeholder="Enter Name"
             onChange={(e) => {
@@ -181,12 +185,14 @@ class myComponent extends React.Component {
                 }})
                
               console.log(this.state);}} />
-           <Datetime value={this.state.currentItem.time}
+            
+           
+           <Datetime  value={this.state.currentItem.time}
           onChange={this.handleChange}
           timeFormat={true}
           closeOnSelect={true}
-          inputProps={{ placeholder: "Input Date" }}/>
-          Select date:{" "}
+          inputProps={{ placeholder: "Select timings of show" }}/>
+          Selected timings :{" "}
         {this.state.currentItem.time
           ? this.state.currentItem.time.toString()
           : "No selected date"}
