@@ -9,6 +9,7 @@ import { MDBDataTable } from 'mdbreact';
 import React from 'react';
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
+import swal from "sweetalert";
 import Timekeeper from 'react-timekeeper';
 import Timepickercomponent from "./components/timepickercomponent"
 
@@ -62,10 +63,22 @@ class myComponent extends React.Component {
     console.log(formattedTime)
     var url="https://zomsystem.herokuapp.com/addRecord?uniqueid="+this.state.currentItem.unique_id +"&nm="+this.state.currentItem.name +"&phonenumber="+this.state.currentItem.phonenumber +"&time="+formattedTime ;
     console.log(url)
-    if ((this.state.currentItem.unique_id!='') && (this.state.currentItem.name!='') && (this.state.currentItem.phonenumber!='') && (this.state.currentItem.time!='' ))
+    if ((this.state.currentItem.unique_id!=='') && (this.state.currentItem.name!=='') && (this.state.currentItem.phonenumber!=='') && (this.state.currentItem.time!=='' ))
     {
+      swal(
+        'Added !',
+        'Booked successfully !',
+        'success'
+                 )
       fetch(url)
       this.componentDidMount()
+    }
+    else{
+      swal(
+        'Invalid !',
+        'Please input all entries  !',
+        'error'
+                 )
     }
     
     
