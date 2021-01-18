@@ -91,11 +91,29 @@ class myComponent extends React.Component {
              
         }})
         console.log(this.state.info)
-      });}
+      });
+      swal(
+        'Loaded !',
+        'Loaded Successfully !',
+        'success'
+                 )
+    }
+    else{
+      swal(
+        'Invalid !',
+        'Enter the feilds and submit to view user details !',
+        'info'
+                 )
+    }
   }
   handleViewReset=()=>
   {
     this.setState({gotinfo:false})
+    swal(
+      'Done !',
+      'Reset Done !',
+      'warning'
+               )
   }
   handleDelete=()=>{
     console.log("delete clicked",this.state.tempId)
