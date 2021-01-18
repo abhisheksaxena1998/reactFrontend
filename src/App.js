@@ -11,7 +11,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import swal from "sweetalert";
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText } from 'mdbreact';
-
+import { MDBAlert } from 'mdbreact';
 
 class myComponent extends React.Component {
   state = {
@@ -23,9 +23,21 @@ class myComponent extends React.Component {
       phonenumber:'',
     },
     tempId:'',
+    info:{ unique_id:'',
+    index:'',
+    name:'',
+    time:'',
+    phonenumber:'',
+    created_at:'',
+    result:'',
+         
+
+    },
+    ticketID:'',
     previousTime:'',
     updatedTime:'',
     records: [],
+    gotinfo:false,
     startDate:'',
     isLoading: false,
   };
@@ -57,6 +69,33 @@ class myComponent extends React.Component {
   handleReset = ()=>{
     console.log("reset clicked")
     console.log(this.state)
+  }
+  handleView=()=>{
+    if (this.state.ticketID!=='')
+    {
+    const Url = 'https://zomsystem.herokuapp.com/ticketinfo?query='+this.state.ticketID
+    console.log("handle view invoked",this.state.ticketID,Url)
+    fetch(Url)
+      .then((response) => response.json())
+      .then(data => {
+        this.setState({ info: data , gotinfo: true})
+        this.setState({info:{               
+          unique_id:data.unique_id, 
+          name: data.name,
+          phonenumber: data.phone_number,
+         time:data.time,   
+         created_at:data.created_at,
+         result:data.result,
+         index:data.index
+         
+             
+        }})
+        console.log(this.state.info)
+      });}
+  }
+  handleViewReset=()=>
+  {
+    this.setState({gotinfo:false})
   }
   handleDelete=()=>{
     console.log("delete clicked",this.state.tempId)
@@ -176,7 +215,7 @@ class myComponent extends React.Component {
         },
         {
           label: 'Phone Number',
-          field: 'phone number',
+          field: 'phone_number',
           width: 50
         },
         {
@@ -187,6 +226,52 @@ class myComponent extends React.Component {
       ],
       rows: this.state.records
       }
+
+      const viewApiRes = {
+        columns: [
+          {
+            label: 'Unique Id',
+            field: 'unique_id',
+           
+            width: 50
+          },
+          {
+            label: 'Index',
+            field: 'index',
+            
+            width: 50
+          },
+          {
+            label: 'Name',
+            field: 'name',
+           
+            width: 50
+          },
+          {
+            label: 'Result',
+            field: 'result',
+         
+            width: 50
+          },
+          {
+            label: 'Time',
+            field: 'time',
+           
+            width: 50
+          },
+          {
+            label: 'Phone Number',
+            field: 'phone_number',
+            width: 50
+          },
+          {
+            label: 'Created At',
+            field: 'created_at',
+            width: 50
+          }
+        ],
+        rows: this.state.info
+        }
     const { records, isLoading } = this.state;
     if (isLoading) {
       //return <p>Loading ...</p>;
@@ -331,6 +416,57 @@ class myComponent extends React.Component {
       </MDBRow>
     </MDBCol>
   
+    </MDBRow>
+    <MDBRow>
+      <MDBCol>
+    <form>
+        <p className="h5 text-center mb-4">View the user’s details based on the ticket id</p>
+        <div className="grey-text">
+          <MDBInput label="Ticket Id" icon="id-card-alt" group type="text" validate error="wrong" required
+            success="right" value= {this.state.ticketID}
+            placeholder="Enter Ticket ID "
+            onChange={(e) => {
+              this.setState({ticketID:e.target.value   
+                })
+               
+              console.log(this.state);}} />
+         </div>
+         <div className="text-center">
+          <MDBBtn color="success" onClick={this.handleView}>Fetch Details</MDBBtn>
+          <MDBBtn color="warning" onClick={this.handleViewReset}>Reset Details</MDBBtn>
+        </div>
+        {(()=> {
+          
+          console.log(this.state.info)
+          if (this.state.gotinfo===true) {
+            return (  <MDBCol  >
+            <MDBCard className='text-center'>
+              <MDBCardImage className="img-fluid" src=""
+                waves />
+              <MDBCardBody cascade className='text-center'>
+                <MDBCardTitle>Detailed user information</MDBCardTitle>
+                <MDBCardText>View user details here</MDBCardText>
+                <MDBCardText>Index is: </MDBCardText>{this.state.info.index}
+                <MDBCardText>Username is: </MDBCardText>{this.state.info.name}
+                <MDBCardText>Unique ID is: </MDBCardText>{this.state.info.unique_id}
+                <MDBCardText>Time is: </MDBCardText>{this.state.info.time}
+                <MDBCardText>Booked at: </MDBCardText>{this.state.info.created_at}
+                <MDBCardText>Result is: </MDBCardText>{this.state.info.result}
+                <MDBCardText>Phone Number is: </MDBCardText>{this.state.info.phonenumber}
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>)
+          } else {
+            return ( <MDBContainer>
+              <MDBAlert className='text-center' color="warning" dismiss>
+                <strong>Submit userid to view details!</strong> You should enter the feilds and submit to view user details.
+               
+              </MDBAlert>
+            </MDBContainer>);
+          }
+        })()}
+    </form>
+    </MDBCol>
     </MDBRow>
     <MDBRow>
       <MDBCol>
