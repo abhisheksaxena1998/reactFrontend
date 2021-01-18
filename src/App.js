@@ -491,8 +491,10 @@ class myComponent extends React.Component {
   <MDBDataTable className="tablee"
       striped
       bordered
-      small
+hover
+     
       data={data}
+      info={true}
     /></MDBCol>
     </MDBRow>
 
