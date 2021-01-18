@@ -148,41 +148,41 @@ class myComponent extends React.Component {
           label: 'Unique Id',
           field: 'unique_id',
          
-          width: 80
+          width: 50
         },
         {
           label: 'Index',
           field: 'index',
           
-          width: 70
+          width: 50
         },
         {
           label: 'Name',
           field: 'name',
          
-          width: 100
+          width: 50
         },
         {
           label: 'Result',
           field: 'result',
        
-          width: 150
+          width: 50
         },
         {
           label: 'Time',
           field: 'time',
          
-          width: 200
+          width: 50
         },
         {
           label: 'Phone Number',
           field: 'phone number',
-          width: 200
+          width: 50
         },
         {
           label: 'Created At',
           field: 'created_at',
-          width: 200
+          width: 50
         }
       ],
       rows: this.state.records
@@ -305,7 +305,7 @@ class myComponent extends React.Component {
           timeFormat={true}
           closeOnSelect={true}
           inputProps={{ placeholder: "Select previous time" }}/>
-          Selected timings :{" "}
+          Previous Time :{" "}
         {this.state.previousTime
           ? this.state.previousTime.toString()
           : "No selected date"}
@@ -317,7 +317,7 @@ class myComponent extends React.Component {
           timeFormat={true}
           closeOnSelect={true}
           inputProps={{ placeholder: "Select updated time" }}/>
-          Selected timings :{" "}
+          Updated Time :{" "}
         {this.state.updatedTime
           ? this.state.updatedTime.toString()
           : "No selected date"}
