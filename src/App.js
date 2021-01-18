@@ -23,6 +23,8 @@ class myComponent extends React.Component {
       phonenumber:'',
     },
     tempId:'',
+    previousTime:'',
+    updatedTime:'',
     records: [],
     startDate:'',
     isLoading: false,
@@ -36,6 +38,13 @@ class myComponent extends React.Component {
         this.setState({ records: data , isLoading: false})
         console.log(this.state)
       });
+  }
+  handleChangePrev=(date)=>{
+    this.setState({previousTime:date})
+  }
+  handleChangeUpdated=(date)=>{
+    this.setState({updatedTime:date
+    })
   }
   handleChange = (date) => {
     this.setState({currentItem:{               
@@ -70,6 +79,30 @@ class myComponent extends React.Component {
                  )
     }
 
+  }
+  handleUpdateTime=()=>{
+    var newtime= new Date(this.state.updatedTime).getTime()
+    var prevtime=new Date(this.state.previousTime).getTime()
+    var url="https://zomsystem.herokuapp.com/updatetime?oldtime="+ prevtime +"&newtime="+ newtime ;
+    if ((this.state.previousTime!=='') && (this.state.updatedTime!=='') )
+    {
+      swal(
+        'Updated !',
+        'Updation done successfully !',
+        'success'
+                 )
+      fetch(url)
+      this.componentDidMount()
+    }
+    else{
+      swal(
+        'Invalid !',
+        'Please input all entries  !',
+        'warning'
+                 )
+    }
+    
+   
   }
   handleSubmit=()=>{
     console.log("submit clicked")
@@ -265,19 +298,33 @@ class myComponent extends React.Component {
       <MDBRow>
         <MDBCol>
       <form>
-        <p className="h5 text-center mb-4">Delete Ticket</p>
+        <p className="h5 text-center mb-4">Update Ticket Timings</p>
         <div className="grey-text">
-          <MDBInput label="Unique Id" icon="id-card-alt" group type="text" validate error="wrong" required
-            success="right" value= {this.state.tempId}
-            placeholder="Enter Unique Id "
-            onChange={(e) => {
-              this.setState({tempId:e.target.value   
-                })
-               
-              console.log(this.state);}} />
+        <Datetime  value={this.state.previousTime}
+          onChange={this.handleChangePrev}
+          timeFormat={true}
+          closeOnSelect={true}
+          inputProps={{ placeholder: "Select previous time" }}/>
+          Selected timings :{" "}
+        {this.state.previousTime
+          ? this.state.previousTime.toString()
+          : "No selected date"}
+          {console.log('previous time is',this.state.previousTime)}
+         </div>
+          <div className="grey-text">
+        <Datetime  value={this.state.updatedTime}
+          onChange={this.handleChangeUpdated}
+          timeFormat={true}
+          closeOnSelect={true}
+          inputProps={{ placeholder: "Select updated time" }}/>
+          Selected timings :{" "}
+        {this.state.updatedTime
+          ? this.state.updatedTime.toString()
+          : "No selected date"}
+          {console.log('updated time is',this.state.updatedTime)}
          </div>
         <div className="text-center">
-          <MDBBtn color="danger"  onClick={this.handleDelete}>Delete</MDBBtn>
+          <MDBBtn color="primary"  onClick={this.handleUpdateTime}>Update</MDBBtn>
         </div>
       </form>
       </MDBCol>

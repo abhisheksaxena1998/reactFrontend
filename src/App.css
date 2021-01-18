@@ -24,6 +24,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.grey-text {
+  margin-bottom: 0.5rem;
+}
 
 .App-header {
   min-height: 100vh;
