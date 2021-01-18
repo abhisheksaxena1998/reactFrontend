@@ -449,7 +449,7 @@ class myComponent extends React.Component {
                 <MDBCardText>Index is: </MDBCardText>{this.state.info.index}
                 <MDBCardText>Username is: </MDBCardText>{this.state.info.name}
                 <MDBCardText>Unique ID is: </MDBCardText>{this.state.info.unique_id}
-                <MDBCardText>Time is: </MDBCardText>{this.state.info.time}
+                <MDBCardText>Time is: </MDBCardText>{new Date(parseInt(this.state.info.time)).toString()}
                 <MDBCardText>Booked at: </MDBCardText>{this.state.info.created_at}
                 <MDBCardText>Result is: </MDBCardText>{this.state.info.result}
                 <MDBCardText>Phone Number is: </MDBCardText>{this.state.info.phonenumber}
