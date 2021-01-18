@@ -368,7 +368,7 @@ class myComponent extends React.Component {
           onChange={this.handleChange}
           timeFormat={true}
           closeOnSelect={true}
-          inputProps={{ placeholder: "Select timings of show" }}/>
+          inputProps={{ placeholder: "⏲ Select timings of show" }}/>
           Selected timings :{" "}
         {this.state.currentItem.time
           ? this.state.currentItem.time.toString()
@@ -407,7 +407,7 @@ class myComponent extends React.Component {
           onChange={this.handleChangePrev}
           timeFormat={true}
           closeOnSelect={true}
-          inputProps={{ placeholder: "Select previous time" }}/>
+          inputProps={{ placeholder: "🕘 Select previous time" }}/>
           Previous Time :{" "}
         {this.state.previousTime
           ? this.state.previousTime.toString()
@@ -419,7 +419,7 @@ class myComponent extends React.Component {
           onChange={this.handleChangeUpdated}
           timeFormat={true}
           closeOnSelect={true}
-          inputProps={{ placeholder: "Select updated time" }}/>
+          inputProps={{ placeholder: "🕢 Select updated time" }}/>
           Updated Time :{" "}
         {this.state.updatedTime
           ? this.state.updatedTime.toString()
